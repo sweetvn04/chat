@@ -10,7 +10,7 @@ export default function Chat(){
   console.log(input)
 
   function sendMessages(){
-    setMessages([...messages, input]) // unpack the messages array and add input after these element
+    setMessages([...messages, {role: "user", content: input}]) // unpack the messages array and add the collection after it
     setInput("") // set the variable equal empty to clear the input field after send message
   }
 
@@ -26,7 +26,7 @@ export default function Chat(){
       <button onClick={ () => setInput("") }> Clear </button>
 
       <div>
-        {messages.map((msg, index) => <p key={index}>{msg}</p>)}
+        {messages.map((msg, index) => <p key={index}> {msg.role}: {msg.content} </p>)}
       </div>
     </>
   )
