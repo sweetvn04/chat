@@ -29,17 +29,36 @@ export default function Chat(){
 
   return (
     <>
-      <input className="border rounded p-2"
-        value={input} // set value equal input (so we can clear the <input> by empty the input of state)
-        placeholder="Type something here!"
-        onChange={(e) => setInput(e.target.value)} // write the input to the variable of state (input variable)
-      />
+      <div className="flex flex-col  h-screen p-4">
+        <div className="flex-1 overflow-y-auto gap-2 mb-4">
+          {
+            messages.map(
+              function(msg, index){
+                return (
+                  <p 
+                    key={index}
+                    className={`max-w-xs rounded-lg p-3 ${msg.role==='user' ? "bg-blue-200 ml-auto" : "bg-gray-200 mr-auto"}`}
+                  >
+                    {msg.content}
+                  </p>
+                )
+              }
+            )
+          }
+        </div>
 
-      <button onClick={sendMessages}>Send</button>
+        <div className="flex gap-2">
+          <input className="flex-1 border rounded p-2"
+            value={input} // set value equal input (so we can clear the <input> by empty the input of state)
+            placeholder="Type something here!"
+            onChange={(e) => setInput(e.target.value)} // write the input to the variable of state (input variable)
+          />
+          <button onClick={sendMessages}>Send</button>
+        </div>
 
-      <div>
-        {messages.map((msg, index) => <p key={index}> {msg.role}: {msg.content} </p>)}
       </div>
+      
+      
     </>
   )
 }
