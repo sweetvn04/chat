@@ -29,7 +29,7 @@ export default function Chat(){
 
   return (
     <>
-      <input
+      <input className="border rounded p-2"
         value={input} // set value equal input (so we can clear the <input> by empty the input of state)
         placeholder="Type something here!"
         onChange={(e) => setInput(e.target.value)} // write the input to the variable of state (input variable)
