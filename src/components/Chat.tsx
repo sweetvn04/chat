@@ -12,7 +12,20 @@ export default function Chat(){
   function sendMessages(){
     setMessages([...messages, {role: "user", content: input}]) // unpack the messages array and add the collection after it
     setInput("") // set the variable equal empty to clear the input field after send message
-  }
+    
+    // setMessages([...messages,{role: "bot", content: "I recieved your message!"}])
+
+    // cant use the above one cuz React btaches all update and applies it after function finishes.
+    // so if use setMessage(...messages), all two of these line will use the same old array
+    // and the second one will overwrite the first one setMessage line
+    
+    // now the messages state have the input of user but react do not update it immediately
+    
+    //so we use another array and call it which have user input, then we add the response of bot
+    setMessages(prev => [...prev, {role: "bot", content: "I recieved your message!"}])
+    }
+    //one more thing that react can use two type of parameter. value and function return value  
+
 
   return (
     <>
@@ -22,8 +35,7 @@ export default function Chat(){
         onChange={(e) => setInput(e.target.value)} // write the input to the variable of state (input variable)
       />
 
-      <button onClick={sendMessages}> Send </button>
-      <button onClick={ () => setInput("") }> Clear </button>
+      <button onClick={sendMessages}>Send</button>
 
       <div>
         {messages.map((msg, index) => <p key={index}> {msg.role}: {msg.content} </p>)}
