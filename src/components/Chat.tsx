@@ -30,7 +30,7 @@ export default function Chat(){
   return (
     <>
       <div className="flex flex-col  h-screen p-4">
-        <div className="flex-1 overflow-y-auto gap-2 mb-4">
+        <div className="flex-1 flex flex-col justify-end overflow-y-auto gap-2 mb-4">
           {
             messages.map(
               function(msg, index){
