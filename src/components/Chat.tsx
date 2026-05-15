@@ -9,7 +9,7 @@ export default function Chat(){
   // show the input log via f12 
   console.log(input)
 
-  function sendMessages(){
+  async function sendMessages(){
     setMessages([...messages, {role: "user", content: input}]) // unpack the messages array and add the collection after it
     setInput("") // set the variable equal empty to clear the input field after send message
     
@@ -22,8 +22,21 @@ export default function Chat(){
     // now the messages state have the input of user but react do not update it immediately
     
     //so we use another array and call it which have user input, then we add the response of bot
-    setMessages(prev => [...prev, {role: "bot", content: "I recieved your message!"}])
-    }
+    //setMessages(prev => [...prev, {role: "bot", content: "I recieved your message!"}])
+    
+    // fetch to the server and send the user message
+    const response = await fetch("http://localhost:8000/chat", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({message: input}) 
+    })
+    const data = await response.json()
+
+    setMessages(prev => [...prev, {role: "bot", content: data.reply}])
+  }
+
+    
+
     //one more thing that react can use two type of parameter. value and function return value  
 
 
