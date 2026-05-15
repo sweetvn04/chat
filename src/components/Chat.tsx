@@ -26,11 +26,12 @@ export default function Chat(){
     
     // fetch to the server and send the user message
     const response = await fetch("http://localhost:8000/chat", {
-      method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({message: input}) 
+      method: "POST", // it is a sending data request
+      headers: {"Content-Type": "application/json"}, // tell fastapi that is an json format
+      body: JSON.stringify({message: input}) // it make this js object like '{message: input}'. It's a plain text so it's easy to travel on the internet 
     })
-    const data = await response.json()
+
+    const data = await response.json() // waiting response from backend
 
     setMessages(prev => [...prev, {role: "bot", content: data.reply}])
   }
