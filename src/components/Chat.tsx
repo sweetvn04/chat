@@ -1,4 +1,5 @@
 import {useState} from "react"
+import ReactMarkdown from "react-markdown"
 
 export default function Chat(){
   // state for input 
@@ -43,18 +44,18 @@ export default function Chat(){
 
   return (
     <>
-      <div className="flex flex-col  h-screen p-4">
-        <div className="flex-1 flex flex-col justify-end overflow-y-auto gap-2 mb-4">
+      <div className="flex flex-col  h-screen p-4 items-center">
+        <div className="flex-1 flex flex-col  overflow-y-auto gap-2 mb-4">
           {
             messages.map(
               function(msg, index){
                 return (
-                  <p 
+                  <div 
                     key={index}
-                    className={`max-w-xs rounded-lg p-3 ${msg.role==='user' ? "bg-blue-200 ml-auto" : "bg-gray-200 mr-auto"}`}
+                    className={`max-w-lg rounded-lg p-3 ${msg.role==='user' ? "bg-blue-200 ml-auto" : "bg-gray-200 mr-auto"}`}
                   >
-                    {msg.content}
-                  </p>
+                    <ReactMarkdown>{msg.content}</ReactMarkdown>
+                  </div>
                 )
               }
             )
@@ -66,6 +67,11 @@ export default function Chat(){
             value={input} // set value equal input (so we can clear the <input> by empty the input of state)
             placeholder="Type something here!"
             onChange={(e) => setInput(e.target.value)} // write the input to the variable of state (input variable)
+            onKeyDown={e => {
+              if (e.key === "Enter"){
+                sendMessages()
+              }
+            }}
           />
           <button onClick={sendMessages}>Send</button>
         </div>
