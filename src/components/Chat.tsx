@@ -1,4 +1,4 @@
-import {useState} from "react"
+import {useState, useEffect, useRef} from "react"
 import ReactMarkdown from "react-markdown"
 
 export default function Chat(){
@@ -8,7 +8,16 @@ export default function Chat(){
   const [messages, setMessages] = useState([])
 
   // show the input log via f12 
-  console.log(input)
+  // console.log(input)
+
+  const bottomRef = useRef(null) // create a ref to attact to a real DOM element. This is <div> below
+  
+  useEffect(
+    // bottomRef.current is exactly the <div> has attribute ref={bottomRef}
+    // ? is check if bottomRef null. and scrollIntoView is a browser method to scroll to this div has reference
+    () => {bottomRef.current?.scrollIntoView({behavior: "smooth"})},
+    [messages] // useEffect run when messages change
+  )
 
   async function sendMessages(){
     setMessages([...messages, {role: "user", content: input}]) // unpack the messages array and add the collection after it
@@ -60,6 +69,7 @@ export default function Chat(){
               }
             )
           }
+          <div ref={bottomRef} />
         </div>
 
         <div className="flex gap-2">
